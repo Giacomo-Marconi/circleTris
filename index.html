@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
@@ -7,37 +7,33 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles/main.css">
-
-    <!-- CSS per schermi piccoli (smartphone) -->
     <link rel="stylesheet" href="styles/styleS.css" media="only screen and (max-width: 600px)">
-    
-    <!-- CSS per schermi medi (tablet) -->
     <link rel="stylesheet" href="styles/styleM.css" media="only screen and (min-width: 601px) and (max-width: 1023px)">
-    
-    <!-- CSS per schermi grandi (desktop) -->
     <link rel="stylesheet" href="styles/styleL.css" media="only screen and (min-width: 1024px)">
-
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Script -->
-    
+    <script src="script/script.js" defer></script>
 </head>
 <body>
     <header>
         <div>
-            <button id="nightModeToggle" class="night-mode-button">
-                <i class="fas fa-moon"></i>
-            </button>
-    
             <h1>TIC-TAC-TOE<a class="titleGradient">TWIST</a></h1>
         </div>
     </header>
 
     <main>
-        <svg id="concentric-circles" width="500" height="500" viewBox="0 0 500 500"></svg>
+        <div class="game-container">
+            <div class="svg-container">
+                <svg id="ring-1" width="500" height="500" viewBox="0 0 500 500"></svg>
+                <svg id="ring-2" width="500" height="500" viewBox="0 0 500 500"></svg>
+                <svg id="ring-3" width="500" height="500" viewBox="0 0 500 500"></svg>
+                <svg id="ring-4" width="500" height="500" viewBox="0 0 500 500"></svg>
+            </div>
+        </div>
     </main>
-    <script src="script/script.js"></script>
 </body>
 </html>
