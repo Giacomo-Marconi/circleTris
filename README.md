@@ -9,7 +9,7 @@
 
 ## 🛠️ How to play the game
 
-All you have to do is to click on this link: https://triscircle.figliolo.it
+All you have to do is to click on this link: [circleTris](https://circletris.figliolo.it/)
 
 Really! Is that simple 😄
 
