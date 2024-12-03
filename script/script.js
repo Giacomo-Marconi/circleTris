@@ -2,21 +2,26 @@ let board = [];
 let gameState = [];
 let currentPlayer = 0;
 
+const CENTERX = 250;
+const CENTERY = 250;
+const RADIUSSTEP = 60;
+const SECTIONS = 6;
+const NCIRCLE = 3;
+
 document.addEventListener("DOMContentLoaded", () => {
     initializeGameBoard();
 
-    const centerX = 250;
-    const centerY = 250;
-    const radiusStep = 40;
-    const sections = 8;
+    
 
-    for (let ring = 1; ring <= 4; ring++) {
+
+
+    for (let ring = 1; ring <= NCIRCLE; ring++) {
         const svg = document.getElementById(`ring-${ring}`);
-        const innerRadius = radiusStep * (ring - 1);
-        const outerRadius = radiusStep * ring;
+        const innerRadius = RADIUSSTEP * (ring - 1);
+        const outerRadius = RADIUSSTEP * ring;
 
-        for (let section = 0; section < sections; section++) {
-            const path = createSector(centerX, centerY, innerRadius, outerRadius, sections, section);
+        for (let section = 0; section < SECTIONS; section++) {
+            const path = createSector(CENTERX, CENTERY, innerRadius, outerRadius, SECTIONS, section);
             board[ring - 1][section] = path;
 
             path.addEventListener("click", () => handleSectorClick(ring - 1, section));
@@ -25,15 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Initialize game board
+
 function initializeGameBoard() {
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < NCIRCLE; i++) {
         board[i] = [];
-        gameState[i] = Array(8).fill(-1);
+        gameState[i] = Array(SECTIONS).fill(-1);
     }
 }
 
-// Create sector
+
 function createSector(centerX, centerY, innerRadius, outerRadius, sections, section) {
     const startAngle = (section * 2 * Math.PI) / sections;
     const endAngle = ((section + 1) * 2 * Math.PI) / sections;
@@ -59,23 +64,22 @@ function createSector(centerX, centerY, innerRadius, outerRadius, sections, sect
     path.setAttribute("d", d);
     path.setAttribute("fill", "#f1f1f1");
     path.setAttribute("stroke", "#000");
-    path.setAttribute("stroke-width", "2px");
+    path.setAttribute("stroke-width", "3px");
     path.setAttribute("class", "sector");
 
     return path;
 }
 
-// Handle sector click
+
 async function handleSectorClick(x, y) {
     if (gameState[x][y] === -1) {
-        const color = currentPlayer === 0 ? "blue" : "red";
+        const color = currentPlayer === 0 ? "#FEA82F" : "#F4989C";
         gameState[x][y] = currentPlayer;
         board[x][y].setAttribute("fill", color);
         board[x][y].classList.remove("sector");
         board[x][y].removeEventListener("click", () => handleSectorClick(x, y)); 
         currentPlayer = 1 - currentPlayer;
 
-        // Check for a win after updating the color
         const winner = checkWin();
         if (winner !== -1) {
             await sleep(100);
@@ -85,16 +89,16 @@ async function handleSectorClick(x, y) {
     }
 }
 
-// Sleep function
+
 function sleep(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
-// Check for a win
+
 function checkWin() {
-    // Check rows
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 8; j++) {
+    
+    for (let i = 0; i < NCIRCLE; i++) {
+        for (let j = 0; j < SECTIONS; j++) {
             if (checkLine(gameState[i], j)) {
                 highlightWinningSectors(i, j, 'row');
                 return gameState[i][j];
@@ -102,18 +106,21 @@ function checkWin() {
         }
     }
 
-    // Check columns
-    for (let j = 0; j < 8; j++) {
-        if (gameState[0][j] !== -1 && gameState[0][j] === gameState[1][j] && gameState[1][j] === gameState[2][j] && gameState[2][j] === gameState[3][j]) {
+    
+    for (let j = 0; j < SECTIONS; j++) {
+        if (gameState[0][j] !== -1 && gameState[0][j] === gameState[1][j] && gameState[1][j] === gameState[2][j]) {
             highlightWinningSectors(j, 0, 'column');
             return gameState[0][j];
         }
     }
 
-    // Check diagonals
-    for (let i = 0; i < 8; i++) {
-        if (checkDiagonal(i)) {
+    
+    for (let i = 0; i < SECTIONS; i++) {
+        if (checkDiagonal(i)===1) {
             highlightWinningSectors(i, 0, 'diagonal');
+            return gameState[0][i];
+        }else if (checkDiagonal(i)===-1) {
+            highlightWinningSectors(i, 0, '!diagonal');
             return gameState[0][i];
         }
     }
@@ -121,53 +128,53 @@ function checkWin() {
     return -1;
 }
 
-// Highlight winning sectors
+
 function highlightWinningSectors(index, start, type) {
     let sectors = [];
     if (type === 'row') {
-        for (let k = 0; k < 4; k++) {
-            sectors.push([index, (start + k) % 8]);
+        for (let k = 0; k < NCIRCLE; k++) {
+            sectors.push([index, (start + k) % SECTIONS]);
         }
     } else if (type === 'column') {
-        for (let k = 0; k < 4; k++) {
+        for (let k = 0; k < NCIRCLE; k++) {
             sectors.push([k, index]);
         }
     } else if (type === 'diagonal') {
-        for (let k = 0; k < 4; k++) {
-            sectors.push([k, (index + k) % 8]);
+        for (let k = 0; k < NCIRCLE; k++) {
+            sectors.push([k, (index + k) % SECTIONS]);
+        }
+    }else if (type === '!diagonal') {
+        for (let k = 0; k < NCIRCLE; k++) {
+            sectors.push([k, (index - k + SECTIONS) % SECTIONS]);
         }
     }
 
     sectors.forEach(([x, y]) => {
-        board[x][y].setAttribute("fill", "green");
+        board[x][y].setAttribute("fill", "#60AFFF");
     });
 }
 
-// Check line for win
+
 function checkLine(row, start) {
     return row[start] !== -1 &&
-        row[start] === row[(start + 1) % 8] &&
-        row[start] === row[(start + 2) % 8] &&
-        row[start] === row[(start + 3) % 8];
+        row[start] === row[(start + 1) % SECTIONS] &&
+        row[start] === row[(start + 2) % SECTIONS]
 }
 
-// Check diagonal for win
+
 function checkDiagonal(i) {
-    // Check one diagonal direction
     if (gameState[0][i] !== -1 &&
-        gameState[0][i] === gameState[1][(i + 1) % 8] &&
-        gameState[0][i] === gameState[2][(i + 2) % 8] &&
-        gameState[0][i] === gameState[3][(i + 3) % 8]) {
-        return true;
+        gameState[0][i] === gameState[1][(i + 1) % SECTIONS] &&
+        gameState[0][i] === gameState[2][(i + 2) % SECTIONS]) {
+        return 1;
     }
 
-    // Check the opposite diagonal direction
+    
     if (gameState[0][i] !== -1 &&
-        gameState[0][i] === gameState[1][(i + 7) % 8] &&
-        gameState[0][i] === gameState[2][(i + 6) % 8] &&
-        gameState[0][i] === gameState[3][(i + 5) % 8]) {
-        return true;
+        gameState[0][i] === gameState[1][(i + 5) % SECTIONS] &&
+        gameState[0][i] === gameState[2][(i + 4) % SECTIONS]) {
+        return -1;
     }
 
-    return false;
+    return 0;
 }
