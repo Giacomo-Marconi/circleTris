@@ -7,6 +7,13 @@
 
 ---
 
+## New Updates
+
+**Circle Tic-Tac-Toe Online** have received:
+- Improved user interface with new animations.
+- Added game for single-player mode.
+
+
 ## 🛠️ How to play the game
 
 All you have to do is to click on this link: [circleTris](https://circletris.figliolo.it/)

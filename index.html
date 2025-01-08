@@ -6,31 +6,43 @@
     <title>Circle Tris</title>
 
     <link rel="stylesheet" href="styles/style.css">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merienda:wght@300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Imperial+Script&family=Merienda:wght@300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <script src="script/script.js" defer></script>
+    
 </head>
-<body>
+<body class="light-mode">
     <header>
         <div>
             <h1>Tris <a class="titleGradient"> Circle</a></h1>
         </div>
     </header>
 
+    <button class="theme-toggle">Toggle Theme</button>
+    
+    <div class="mode-select">
+        <label for="game-mode">Select Game Mode:</label>
+        <select id="game-mode">
+            <option value="human">Two Players</option>
+            <option value="ai">Play Against Computer</option>
+        </select>
+    </div>
+
     <main>
-        <div class="game-container">
-            <div class="svg-container">
-                <svg id="ring-1" width="500" height="500" viewBox="0 0 500 500"></svg>
-                <svg id="ring-2" width="500" height="500" viewBox="0 0 500 500"></svg>
-                <svg id="ring-3" width="500" height="500" viewBox="0 0 500 500"></svg>
+        <div class="cont">
+            <div class="status-container">
+                <p class="status-message">It's <span class="current-player" id="current-player">Player 1's</span> turn!</p>
+            </div>
+    
+            <div class="game-container">
+                <div class="svg-container">
+                    <svg id="ring-1" width="750" height="750" viewBox="0 0 750 750"></svg>
+                    <svg id="ring-2" width="750" height="750" viewBox="0 0 750 750"></svg>
+                    <svg id="ring-3" width="750" height="750" viewBox="0 0 750 750"></svg>
+                </div>
             </div>
         </div>
     </main>
+    <script src="script/script.js" defer></script>
 </body>
 </html>

@@ -12,6 +12,7 @@
     --grigio: #605B56;
 }
 
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--sfondo);
@@ -21,6 +22,8 @@ body {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    transition: background-color 0.3s ease-in-out;
+    gap: 2vh;
 }
 
 
@@ -55,6 +58,10 @@ main {
     height: 500px;
     position: relative;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .svg-container {
@@ -76,9 +83,112 @@ main {
 
 .sector {
     pointer-events: auto;
+    transition: trasform 0.1s ease, fill 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .sector:hover {
     fill: #65cdfd8c;
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
+
+.dark-mode {
+    background-color: #333;
+    color: var(--sfondo);
+}
+
+.light-mode {
+    background-color: var(--sfondo);
+    color: var(--grigio);
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    color:#FEA82F;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle:hover {
+    background-color: #ddd;
+}
+
+
+/* Dark mode*/
+.dark-mode header {
+    background-color: #72A276;
+}
+
+.dark-mode .svg-container {
+    background-color: #72A276;
+}
+
+.dark-mode .sector{
+    fill: #72A276;
+}
+
+.dark-mode .sector:hover {
+    fill: #65cdfd;
+}
+
+.dark-mode .mode-select{
+    background-color: #72A276;
+    color: #FEA82F;
+}
+
+.dark-mode select{
+    background-color: #72A276;
+    color: #FEA82F;
+}
+
+
+
+/*Message*/
+.status-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.status-message {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.current-player {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+
+/*Mode selector*/
+.mode-select {
+    text-align: center;
+    padding: 1vh;
+    border-radius: 15px;
+    background-color: #f1f1f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #FEA82F;
+    font-weight: bold;
+}
+
+select{
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f1f1f1;
+    color: #FEA82F;
+    font-weight: bold;
     cursor: pointer;
 }
